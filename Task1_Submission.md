@@ -6,11 +6,10 @@
 
 | #   | Name       |
 |-----|------------|
-| 1   | Ibrahim Traore |
-| 2   |            |
-| 3   |            |
-| 4   |            |
-| 5   | *(optional)* |
+| 1   | Thabo Ibrahim Traore |
+| 2   | Jordan Barnes           |
+| 3   | Zizwe Mtonga         |
+| 4   | Tapiwa Musinga          |
 
 ---
 
@@ -92,5 +91,3 @@ The IoT-23 dataset contains real network traffic captured from 23 IoT device inf
 > **Python 3** (with pandas, numpy, scikit-learn, matplotlib, seaborn)
 
 ---
-
-*Prepared for CS Linux Course -- Alabama A&M University*
