@@ -23,11 +23,10 @@ pdf.ln(2)
 
 pdf.set_font("Helvetica", "", 11)
 members = [
-    ("1", "Ibrahim Traore"),
-    ("2", ""),
-    ("3", ""),
-    ("4", ""),
-    ("5", "(optional)"),
+    ("1", "Thabo Ibrahim Traore"),
+    ("2", "Jordan Barnes"),
+    ("3", "Zizwe Mtonga"),
+    ("4", "Tapiwa Musinga"),
 ]
 pdf.set_fill_color(220, 220, 220)
 pdf.set_font("Helvetica", "B", 11)
@@ -214,11 +213,6 @@ pdf.ln(2)
 pdf.set_font("Helvetica", "", 11)
 pdf.cell(0, 8, "Python 3 (with pandas, numpy, scikit-learn, matplotlib, seaborn)", new_x="LMARGIN", new_y="NEXT")
 pdf.ln(8)
-
-# Footer
-pdf.set_font("Helvetica", "I", 9)
-pdf.set_text_color(120, 120, 120)
-pdf.cell(0, 6, "Prepared for CS Linux Course - Alabama A&M University", align="C")
 
 pdf.output("Task1_Submission.pdf")
 print("PDF generated: Task1_Submission.pdf")
