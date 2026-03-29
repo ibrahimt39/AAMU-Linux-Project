@@ -5,6 +5,10 @@ __pycache__/
 .venv/
 venv/
 
+# Data files (too large for git — download via kaggle CLI)
+*.csv
+*.zip
+
 # Results (generated at runtime)
 results/
 

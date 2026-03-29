@@ -37,25 +37,41 @@ echo ""
 
 # ---- Install required packages (user-level) ----
 echo "Installing required Python packages..."
-pip3 install --user pandas numpy scikit-learn matplotlib seaborn 2>&1 | tail -1
+pip3 install --user pandas numpy scikit-learn matplotlib seaborn kaggle 2>&1 | tail -1
 echo ""
 
-# ---- Verify dataset exists ----
-DATASET="iot23_dataset.csv"
+# ---- Download and prepare dataset if needed ----
+DATASET="iot23_combined.csv"
 if [ ! -f "$DATASET" ]; then
-    echo "ERROR: Dataset file '$DATASET' not found in $(pwd)"
+    echo "Dataset not found. Downloading from Kaggle..."
     echo ""
-    echo "Please download the IoT-23 dataset and place it here."
-    echo "Source: https://www.kaggle.com/datasets/arbazkhan971/iot23-dataset"
+
+    if [ -z "$KAGGLE_API_TOKEN" ]; then
+        echo "ERROR: KAGGLE_API_TOKEN is not set."
+        echo "Run:  export KAGGLE_API_TOKEN=your_token_here"
+        echo "Then re-run this script."
+        exit 1
+    fi
+
+    kaggle datasets download -d srifqi/iot-23-cleaned-data
+    unzip -o iot-23-cleaned-data.zip
+
+    echo "Combining CSV files..."
+    python3 -c "
+import pandas as pd, glob
+files = sorted(glob.glob('CTU-*.csv'))
+dfs = [pd.read_csv(f, sep='|') for f in files]
+combined = pd.concat(dfs, ignore_index=True)
+combined.to_csv('iot23_combined.csv', index=False)
+print(f'Combined {len(files)} files: {combined.shape[0]:,} rows')
+"
+
+    # Clean up individual files
+    rm -f CTU-*.csv iot-23-cleaned-data.zip
     echo ""
-    echo "If using Kaggle CLI:"
-    echo "  pip3 install --user kaggle"
-    echo "  kaggle datasets download -d arbazkhan971/iot23-dataset"
-    echo "  unzip iot23-dataset.zip"
-    exit 1
 fi
 
-echo "Dataset found: $DATASET ($(du -h $DATASET | cut -f1))"
+echo "Dataset: $DATASET ($(du -h $DATASET | cut -f1))"
 echo ""
 
 # ---- Run the analysis ----
